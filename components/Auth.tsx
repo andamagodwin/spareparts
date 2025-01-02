@@ -2,71 +2,67 @@ import React, { useState } from 'react'
 import { Alert, StyleSheet, View, AppState } from 'react-native'
 import { supabase } from '../lib/supabase'
 import { Button, Input } from '@rneui/themed'
-
-
-import { makeRedirectUri } from "expo-auth-session";
-import * as QueryParams from "expo-auth-session/build/QueryParams";
-import * as WebBrowser from "expo-web-browser";
-import * as Linking from "expo-linking";
-
+// import { makeRedirectUri } from "expo-auth-session";
+// import * as QueryParams from "expo-auth-session/build/QueryParams";
+// import * as WebBrowser from "expo-web-browser";
+// import * as Linking from "expo-linking";
 
 
 
 
+// WebBrowser.maybeCompleteAuthSession(); // required for web only
+// const redirectTo = makeRedirectUri();
+// console.log({redirectTo});
 
-WebBrowser.maybeCompleteAuthSession(); // required for web only
-const redirectTo = makeRedirectUri();
-console.log({redirectTo});
+// const createSessionFromUrl = async (url: string) => {
+//   const { params, errorCode } = QueryParams.getQueryParams(url);
 
-const createSessionFromUrl = async (url: string) => {
-  const { params, errorCode } = QueryParams.getQueryParams(url);
+//   if (errorCode) throw new Error(errorCode);
+//   const { access_token, refresh_token } = params;
 
-  if (errorCode) throw new Error(errorCode);
-  const { access_token, refresh_token } = params;
+//   if (!access_token) return;
 
-  if (!access_token) return;
+//   const { data, error } = await supabase.auth.setSession({
+//     access_token,
+//     refresh_token,
+//   });
+//   if (error) throw error;
+//   console.log("session", data.session);
+//   return data.session;
+// };
 
-  const { data, error } = await supabase.auth.setSession({
-    access_token,
-    refresh_token,
-  });
-  if (error) throw error;
-  console.log("session", data.session);
-  return data.session;
-};
+// const performOAuth = async () => {
+//   const { data, error } = await supabase.auth.signInWithOAuth({
+//     provider: "github",
+//     options: {
+//       redirectTo,
+//       skipBrowserRedirect: true,
+//     },
+//   });
+//   if (error) throw error;
 
-const performOAuth = async () => {
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: "github",
-    options: {
-      redirectTo,
-      skipBrowserRedirect: true,
-    },
-  });
-  if (error) throw error;
+//   const res = await WebBrowser.openAuthSessionAsync(
+//     data?.url ?? "",
+//     redirectTo
+//   );
 
-  const res = await WebBrowser.openAuthSessionAsync(
-    data?.url ?? "",
-    redirectTo
-  );
+//   if (res.type === "success") {
+//     const { url } = res;
+//     await createSessionFromUrl(url);
+//   }
+// };
 
-  if (res.type === "success") {
-    const { url } = res;
-    await createSessionFromUrl(url);
-  }
-};
+// const sendMagicLink = async () => {
+//   const { error } = await supabase.auth.signInWithOtp({
+//     email: "valid.email@supabase.io",
+//     options: {
+//       emailRedirectTo: redirectTo,
+//     },
+//   });
 
-const sendMagicLink = async () => {
-  const { error } = await supabase.auth.signInWithOtp({
-    email: "valid.email@supabase.io",
-    options: {
-      emailRedirectTo: redirectTo,
-    },
-  });
-
-  if (error) throw error;
-  // Email sent.
-};
+//   if (error) throw error;
+//   // Email sent.
+// };
 
 
 
@@ -95,8 +91,8 @@ export default function Auth() {
   const [loading, setLoading] = useState(false)
 
 
-  const url = Linking.useURL();
-  if (url) createSessionFromUrl(url);
+  // const url = Linking.useURL();
+  // if (url) createSessionFromUrl(url);
 
   async function signInWithEmail() {
     setLoading(true)
@@ -152,9 +148,6 @@ export default function Auth() {
       </View>
       <View style={styles.verticallySpaced}>
         <Button title="Sign up" disabled={loading} onPress={() => signUpWithEmail()} />
-      </View>
-      <View style={styles.verticallySpaced}>
-        <Button onPress={sendMagicLink} title="Send Magic Link" />
       </View>
      
     </View>
