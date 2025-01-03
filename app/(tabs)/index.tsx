@@ -5,6 +5,7 @@ import Account from '@/components/Account'
 import Home from '@/components/Home'
 import { View } from 'react-native'
 import { Session } from '@supabase/supabase-js'
+import Register from '../(auth)/register'
 
 export default function HomeScreen() {
   
@@ -24,7 +25,7 @@ export default function HomeScreen() {
   return (
     <View>
       {/* <Account key={session.user.id} session={session} /> */}
-      {session && session.user ?  <Home/>: <Auth />}
+      {session && session.user ?  <Home/>: <Register />}
     </View>
   )
 }

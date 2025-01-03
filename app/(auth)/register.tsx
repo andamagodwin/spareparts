@@ -4,9 +4,10 @@ import { supabase } from '@/lib/supabase'
 import { Button, Input } from '@rneui/themed'
 import { Text } from 'react-native'
 import { Link } from 'expo-router'
+import { useRouter } from 'expo-router'
 
 export default function Register () {
-
+    const router = useRouter();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
@@ -24,6 +25,7 @@ export default function Register () {
     
         if (error) Alert.alert(error.message)
         if (!session) Alert.alert('Please check your inbox for email verification!')
+        router.push('/login')
         setLoading(false)
       }
     

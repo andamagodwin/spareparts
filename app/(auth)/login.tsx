@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { Alert, StyleSheet, View } from 'react-native'
 import { supabase } from '@/lib/supabase'
 import { Button, Input } from '@rneui/themed'
-import { Text } from 'react-native'
-import { Link } from 'expo-router'
+import { Text } from 'react-native';
+import { Link } from 'expo-router';
+import { useRouter } from 'expo-router';
 
 export default function Login (){
-
+    const router = useRouter();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
@@ -20,6 +21,7 @@ export default function Login (){
         })
     
         if (error) Alert.alert(error.message)
+        router.push('/')
         setLoading(false)
       }
     

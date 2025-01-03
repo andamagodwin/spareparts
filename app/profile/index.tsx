@@ -30,9 +30,9 @@ function index() {
 
   return (
     <View>
-        {session && (
-        <Account key={session.user.id} session={session} />
-      )}
+        {session  && session.user ? 
+        <Account key={session.user.id} session={session} /> : null}
+      
     </View>
   )
 }
