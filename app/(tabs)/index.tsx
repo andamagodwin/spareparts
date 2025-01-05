@@ -5,9 +5,10 @@ import Account from '@/components/Account'
 import Home from '@/components/Home'
 import { View } from 'react-native'
 import { Session } from '@supabase/supabase-js'
-import Register from '../(auth)/register'
+import { useRouter } from 'expo-router'
 
 export default function HomeScreen() {
+  const router = useRouter();
   
   const [session, setSession] = useState<Session | null>(null)
 
@@ -22,10 +23,15 @@ export default function HomeScreen() {
     })
   }, [])
 
+  // if (!session ) {
+  //   router.push('/(auth)/login')
+  // }
+
   return (
     <View>
       {/* <Account key={session.user.id} session={session} /> */}
-      {session && session.user ?  <Home/>: <Register />}
+      {session && session.user ? <Home/> : <Auth/>}
+      {/* <Home/> */}
     </View>
   )
 }
