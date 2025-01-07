@@ -30,7 +30,7 @@ export default function HomeScreen() {
   return (
     <View>
       {/* <Account key={session.user.id} session={session} /> */}
-      {session && session.user ? <Home/> : <Auth/>}
+        <Home/>
       {/* <Home/> */}
     </View>
   )
