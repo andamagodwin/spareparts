@@ -41,11 +41,14 @@ function Home() {
           // style={styles.productList}
           contentContainerStyle={styles.productList}
           renderItem={({ item }) => (
-            <View style={styles.productCard}>
-              <Image src={item.urls.full} style={{width: 150, height: 150,borderRadius: 10}} />
-              <Text>Product Name</Text>
+            <TouchableOpacity onPress={() => router.push(`/products/${item.id}`)}>
+              <View style={styles.productCard}>
+                <Image src={item.urls.full} style={{width: 150, height: 150,borderRadius: 10}} />
+                <Text>Product Name</Text>
               <Text>Product Price</Text>
             </View>
+            </TouchableOpacity>
+            
           )}
           keyExtractor={(item) => item.id}
         />
