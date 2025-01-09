@@ -3,6 +3,7 @@ import { View,StyleSheet, Text, Touchable, TouchableOpacity, Image, FlatList } f
 import HomeHeader from './headers/Home'
 import { useRouter } from 'expo-router'
 import Ionicons from '@expo/vector-icons/Ionicons';
+// import MostViewed from './MostViewed';
 
 function Home() {
 
@@ -37,6 +38,7 @@ function Home() {
   return (
     <View style={styles.homeContainer}>
         <HomeHeader/>
+        {/* <MostViewed/> */}
         <FlatList
           data={data}
           // style={styles.productList}
