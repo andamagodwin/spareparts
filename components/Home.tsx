@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { View,StyleSheet, Text, Touchable, TouchableOpacity, Image, FlatList } from 'react-native'
 import HomeHeader from './headers/Home'
 import { useRouter } from 'expo-router'
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 function Home() {
 
@@ -43,6 +44,9 @@ function Home() {
           renderItem={({ item }) => (
             <TouchableOpacity onPress={() => router.push(`/products/${item.id}`)}>
               <View style={styles.productCard}>
+                <View style={{zIndex:1,display:'flex',justifyContent:'center',alignItems:'center',position:'absolute',borderRadius: 10,width:40,height:40,backgroundColor:'white'}}>
+                  <Ionicons name="heart-outline" size={24} color="black" />
+                </View>
                 <Image src={item.urls.full} style={{width: 150, height: 150,borderRadius: 10}} />
                 <Text>Product Name</Text>
               <Text>Product Price</Text>
