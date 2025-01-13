@@ -3,9 +3,12 @@ import { View,StyleSheet, Text, Touchable, TouchableOpacity, Image, FlatList } f
 import HomeHeader from './headers/Home'
 import { useRouter } from 'expo-router'
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 // import MostViewed from './MostViewed';
 
 function Home() {
+  const user = useSelector((state: RootState) => state.auth.user);
 
   const [data,setData] = React.useState([]);
 
@@ -38,6 +41,7 @@ function Home() {
   return (
     <View style={styles.homeContainer}>
         <HomeHeader/>
+        <Text>Welcome, {user?.name || 'Guest'}!</Text>
         {/* <MostViewed/> */}
         {/* <FlatList
           data={data}

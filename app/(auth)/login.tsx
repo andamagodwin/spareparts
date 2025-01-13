@@ -14,12 +14,15 @@ const LoginScreen: React.FC = () => {
   const dispatch = useDispatch();
 
   const handleLogin = async () => {
-    router.replace('/')
-    console.log({email, password})
+    
+    // console.log({email, password})
     // Alert.alert("Login")
+    
     try {
       const data = await login(email, password);
       dispatch(setUser(data));
+      console.log(data);
+      router.replace('/');
     } catch (err: any) {
       setError(err.message);
     }

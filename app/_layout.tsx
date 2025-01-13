@@ -11,11 +11,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import store, { AppDispatch } from '../redux/store';
 import { loadUserFromStorage } from '../redux/slices/authSlice';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import useAuthLoader from '@/hooks/useAuthLoader';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 function RootLayoutInner() {
+  useAuthLoader();
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
