@@ -9,24 +9,24 @@ function Home() {
 
   const [data,setData] = React.useState([]);
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    async function fetchData() {
-      const response = await fetch('https://api.unsplash.com/search/photos?page=1&query=engines', {
-        method: 'GET',
-        headers: {
-          Authorization: 'Client-ID EmgqwtDS5t9wIMiT6bSrkQeO9xkkpoql4aMSygAOD7U',
-          'Content-Type': 'application/json',
-          'Accept-Version': 'v1',
-        }
-      });
-      const json = await response.json();
-      setData(json.results);
-      console.log(json.results);
-    }
-    fetchData();
+  //   async function fetchData() {
+  //     const response = await fetch('https://api.unsplash.com/search/photos?page=1&query=engines', {
+  //       method: 'GET',
+  //       headers: {
+  //         Authorization: 'Client-ID EmgqwtDS5t9wIMiT6bSrkQeO9xkkpoql4aMSygAOD7U',
+  //         'Content-Type': 'application/json',
+  //         'Accept-Version': 'v1',
+  //       }
+  //     });
+  //     const json = await response.json();
+  //     setData(json.results);
+  //     console.log(json.results);
+  //   }
+  //   fetchData();
     
-  }, []);
+  // }, []);
 
 
 
@@ -39,7 +39,7 @@ function Home() {
     <View style={styles.homeContainer}>
         <HomeHeader/>
         {/* <MostViewed/> */}
-        <FlatList
+        {/* <FlatList
           data={data}
           // style={styles.productList}
           contentContainerStyle={styles.productList}
@@ -57,7 +57,7 @@ function Home() {
             
           )}
           keyExtractor={(item) => item.id}
-        />
+        /> */}
         {/* {
           data.map((item) => (
             <View key={item.id}>
