@@ -8,13 +8,41 @@ import { RootState } from '../redux/store';
 import { Button } from '@rneui/themed';
 import { useDispatch } from 'react-redux';
 import { logout } from '@/redux/slices/authSlice';
+
 // import MostViewed from './MostViewed';
+
+
+interface Product {
+  _id: string;
+  image_url: string;
+  name: string;
+  price: number;
+}
+
 
 function Home() {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.auth.user);
 
-  const [data,setData] = React.useState([]);
+  const [data, setData] = React.useState<Product[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch('https://spareparts-backend.vercel.app/api/products', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      const results = await response.json();
+      setData(results);
+      console.log(results);
+    }
+    fetchData();
+    
+  }, []);
+
+
 
   // useEffect(() => {
 
@@ -36,6 +64,7 @@ function Home() {
   // }, []);
 
 
+
   const handleLogout = () => {
     // Perform logout logic here
     // For example, you can clear user data from AsyncStorage or reset Redux state
@@ -50,28 +79,30 @@ function Home() {
   return (
     <View style={styles.homeContainer}>
         <HomeHeader/>
-        <Text>Welcome, {user?.name || 'Guest'}!</Text>
-        <Button title="Logout" onPress={handleLogout} />
+        {/* <Text>Welcome, {user?.name || 'Guest'}!</Text>
+        <Button title="Logout" onPress={handleLogout} /> */}
+
+
         {/* <MostViewed/> */}
-        {/* <FlatList
+        <FlatList
           data={data}
           // style={styles.productList}
           contentContainerStyle={styles.productList}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => router.push(`/products/${item.id}`)}>
+            <TouchableOpacity onPress={() => router.push(`/products/${item._id}`)}>
               <View style={styles.productCard}>
                 <View style={{zIndex:1,display:'flex',justifyContent:'center',alignItems:'center',position:'absolute',borderRadius: 10,width:40,height:40,backgroundColor:'white'}}>
                   <Ionicons name="heart-outline" size={24} color="black" />
                 </View>
-                <Image src={item.urls.full} style={{width: 150, height: 150,borderRadius: 10}} />
-                <Text>Product Name</Text>
-              <Text>Product Price</Text>
+                <Image src={item.image_url} style={{width: 150, height: 150,borderRadius: 10}} />
+                <Text>{item.name}</Text>
+              <Text>{item.price}</Text>
             </View>
             </TouchableOpacity>
             
           )}
-          keyExtractor={(item) => item.id}
-        /> */}
+          keyExtractor={(item) => item._id}
+        />
         {/* {
           data.map((item) => (
             <View key={item.id}>

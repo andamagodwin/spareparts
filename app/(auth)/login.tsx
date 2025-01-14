@@ -55,16 +55,23 @@ const LoginScreen: React.FC = () => {
           <Feather name="lock" size={24} color="#1F41BB" />
           <TextInput placeholder="Password" style={styles.TextInput} value={password} onChangeText={setPassword} secureTextEntry />
         </View>
-        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-          {isLoading ? <Text style={styles.loginText}>Loading...</Text> : <Text style={styles.loginText}>Login</Text>}
-          {/* <Text style={styles.loginText}>Login</Text> */}
+        <TouchableOpacity
+          style={[styles.loginButton, isLoading ? styles.loadingButton : null]}
+          onPress={handleLogin}
+          disabled={isLoading} // Disable button while loading
+        >
+          {isLoading ? (
+            <Text style={styles.loadingText}>Loading...</Text>
+          ) : (
+            <Text style={styles.loginText}>Login</Text>
+          )}
         </TouchableOpacity>
         {error && <Text style={styles.errorText}>{error}</Text>}
         {/* <Button title="Login" onPress={handleLogin} /> */}
         <Text>Already have an account? <Link style={{color:'#1F41BB'}} href="/signup">Signup</Link></Text>
         
       </View>
-      <View style={styles.socials}>
+      {/* <View style={styles.socials}>
         <Text style={styles.socialsHeader}>Or connect with</Text>
         <View style={styles.socialIcons}>
           <View style={styles.socialIconContainer}>
@@ -77,7 +84,7 @@ const LoginScreen: React.FC = () => {
           
         </View>
 
-      </View>
+      </View> */}
      
     </View>
   );
@@ -137,10 +144,17 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 50,
     backgroundColor: '#1F41BB',
-    borderRadius: 10,
+    borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
-    color:'#ffffff'
+    color:'#ffffff',
+    elevation:2
+  },
+  loadingButton: {
+    backgroundColor: '#9ea8ba',
+  },
+  loadingText: {
+    color: '#000',
   },
   loginText:{
     color:'#ffff'

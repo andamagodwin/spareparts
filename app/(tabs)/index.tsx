@@ -17,9 +17,7 @@ export default function HomeScreen() {
   
 
   return (
-    <View style={{ paddingTop: 40}}>
-        <Button title="Log In" onPress={() => router.replace('/login')} />
-        <Button title="Signup" onPress={() => router.replace('/signup')} />
+    <View>
         <Home/>
         
     </View>

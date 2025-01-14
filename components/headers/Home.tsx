@@ -47,6 +47,7 @@ function HomeHeader() {
         </View>
       </View>
       <View style={styles.categoriesContainer}>
+        <Text>Categories</Text>
         <CategorySection />
       </View>
 
