@@ -3,15 +3,17 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'react-native-reanimated';
-import { Provider, useDispatch } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import store, { AppDispatch } from '../redux/store';
+import store, { AppDispatch, RootState } from '../redux/store';
 import { loadUserFromStorage } from '../redux/slices/authSlice';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import useAuthLoader from '@/hooks/useAuthLoader';
+import { useRouter } from 'expo-router';
+import { setUser } from '../redux/slices/authSlice';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -29,6 +31,7 @@ function RootLayoutInner() {
       const storedUserData = await AsyncStorage.getItem('userData');
       if (storedUserData) {
         dispatch(loadUserFromStorage(JSON.parse(storedUserData)));
+        dispatch(setUser(JSON.parse(storedUserData)));
       }
     };
     loadUser();
@@ -56,6 +59,8 @@ function RootLayoutInner() {
 }
 
 export default function RootLayout() {
+
+
   return (
     <Provider store={store}>
       <RootLayoutInner />

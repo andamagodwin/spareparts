@@ -7,6 +7,7 @@ import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import ProtectRoutes from '@/components/ProtectedRoutes';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -14,6 +15,7 @@ export default function TabLayout() {
   const inactiveTintColor = Colors[colorScheme ?? 'light'].tabIconDefault;
 
   return (
+    <ProtectRoutes>
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: activeTintColor,
@@ -54,6 +56,7 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
+    </ProtectRoutes>
   );
 }
 

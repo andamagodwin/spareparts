@@ -5,9 +5,13 @@ import { useRouter } from 'expo-router'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
+import { Button } from '@rneui/themed';
+import { useDispatch } from 'react-redux';
+import { logout } from '@/redux/slices/authSlice';
 // import MostViewed from './MostViewed';
 
 function Home() {
+  const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.auth.user);
 
   const [data,setData] = React.useState([]);
@@ -32,7 +36,12 @@ function Home() {
   // }, []);
 
 
-
+  const handleLogout = () => {
+    // Perform logout logic here
+    // For example, you can clear user data from AsyncStorage or reset Redux state
+    dispatch(logout());
+    router.replace('/login');
+  }
 
 
 
@@ -42,6 +51,7 @@ function Home() {
     <View style={styles.homeContainer}>
         <HomeHeader/>
         <Text>Welcome, {user?.name || 'Guest'}!</Text>
+        <Button title="Logout" onPress={handleLogout} />
         {/* <MostViewed/> */}
         {/* <FlatList
           data={data}
