@@ -130,6 +130,8 @@ const styles = StyleSheet.create({
   loginHeaderSubtitle: {
     fontSize: 20,
     color: '#000',
+    display:'flex',
+    textAlign:'center'
   },
   TextInput: {
     width: '80%',

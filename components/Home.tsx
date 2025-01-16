@@ -80,9 +80,10 @@ function Home() {
   return (
     <View style={styles.homeContainer}>
         <HomeHeader/>
-        <ScrollableTabViewPage2/>
         {/* <Text>Welcome, {user?.name || 'Guest'}!</Text>
         <Button title="Logout" onPress={handleLogout} /> */}
+        <ScrollableTabViewPage2/>
+        
 
 
         {/* <MostViewed/> */}

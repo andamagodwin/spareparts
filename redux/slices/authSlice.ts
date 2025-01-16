@@ -6,6 +6,7 @@ interface User {
   name: string;
   email: string;
   password: string;
+  profileImage: string;
   createdAt: string;
   updatedAt: string;
   __v: number;

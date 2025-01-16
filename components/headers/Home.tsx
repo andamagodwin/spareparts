@@ -11,11 +11,14 @@ import { Image } from 'react-native';
 import CategorySection from '../CategorySection';
 import Feather from '@expo/vector-icons/Feather';
 import Octicons from '@expo/vector-icons/Octicons';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 function HomeHeader() {
+  const user = useSelector((state: RootState) => state.auth.user);
   const [popupVisible, setPopupVisible] = useState(false);
 
   const handleOptionPress = (option: string) => {
@@ -30,6 +33,15 @@ function HomeHeader() {
   return (
     <View style={styles.headerContainer}>
       <View style={styles.topHeader}>
+        <View style={styles.leftHeader}>
+          <TouchableOpacity style={styles.profileImage} onPress={() => router.push('/profile')}>
+            <Image
+              source={{ uri: user?.profileImage }}
+              style={{ width: 40, height: 40, borderRadius: 50 }}
+            />
+          </TouchableOpacity>
+          
+        </View>
         <View>
           <Text style={styles.logo}>SpareGoo</Text>
           {/* <Image
@@ -43,7 +55,7 @@ function HomeHeader() {
             <Octicons name="bell" size={24} color="black" />
           </View>
           <TouchableOpacity onPress={()=> router.push('/cart')}>
-          {/* <FontAwesome name="circle" size={10} color="red" /> */}
+            {/* <FontAwesome5 name="circle" size={10} color="red" /> */}
             <Feather name="shopping-cart" size={24} color="black" />
 
           </TouchableOpacity>
@@ -96,7 +108,8 @@ const styles = StyleSheet.create({
     width: 150,
     fontSize: 18,
     // fontWeight: 'bold',
-    fontFamily: 'SuperCharge'
+    fontFamily: 'SuperCharge',
+    color:'#1F41BB'
   },
   kebab: {
     transform: [{ rotate: '90deg' }],
@@ -110,11 +123,16 @@ const styles = StyleSheet.create({
     // backgroundColor:'green'
   },
   leftHeader:{
-    width: '50%',
+    width: '30%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor:'blue'
+    // backgroundColor:'blue'
+  },
+  profileImage: {
+    borderRadius: 50,
+    borderColor:"#1F41BB",
+    borderWidth:1
   },
   headerContainer: {
     width: '100%',
