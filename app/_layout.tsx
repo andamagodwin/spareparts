@@ -23,6 +23,10 @@ function RootLayoutInner() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    PoppinsBold: require('../assets/fonts/Poppins-Bold.ttf'),
+    PoppinsMedium: require('../assets/fonts/Poppins-Medium.ttf'),
+    PoppinsRegular: require('../assets/fonts/Poppins-Regular.ttf'),
+    SuperCharge: require('../assets/fonts/supercharge.ttf'),
   });
   const dispatch = useDispatch<AppDispatch>();
 
@@ -52,6 +56,7 @@ function RootLayoutInner() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
+        <Stack.Screen name = "cart" options={{ headerShown: false }} />
         
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
       </Stack>

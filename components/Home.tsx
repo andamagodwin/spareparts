@@ -8,6 +8,7 @@ import { RootState } from '../redux/store';
 import { Button } from '@rneui/themed';
 import { useDispatch } from 'react-redux';
 import { logout } from '@/redux/slices/authSlice';
+import ScrollableTabViewPage2 from './scrollableTabView';
 
 // import MostViewed from './MostViewed';
 
@@ -79,14 +80,14 @@ function Home() {
   return (
     <View style={styles.homeContainer}>
         <HomeHeader/>
+        <ScrollableTabViewPage2/>
         {/* <Text>Welcome, {user?.name || 'Guest'}!</Text>
         <Button title="Logout" onPress={handleLogout} /> */}
 
 
         {/* <MostViewed/> */}
-        <FlatList
+        {/* <FlatList
           data={data}
-          // style={styles.productList}
           contentContainerStyle={styles.productList}
           renderItem={({ item }) => (
             <TouchableOpacity onPress={() => router.push(`/products/${item._id}`)}>
@@ -102,15 +103,8 @@ function Home() {
             
           )}
           keyExtractor={(item) => item._id}
-        />
-        {/* {
-          data.map((item) => (
-            <View key={item.id}>
-              <Image src={item.urls.full} style={{width: 200, height: 200}} />
-
-            </View>
-          ))
-        } */}
+        /> */}
+        
        
     </View>
   )

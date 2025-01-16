@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+// import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Fontisto from '@expo/vector-icons/Fontisto';
 
@@ -88,7 +88,8 @@ const styles = StyleSheet.create({
   categoryText: {
     marginTop: 5,
     fontSize: 11,
-    color: '#333',
+    color: '#000',
+    fontFamily:'PoppinsRegular'
   },
   selectedText: {
     color: '#000', // White text for selected category

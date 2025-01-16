@@ -9,9 +9,11 @@ import {
 } from 'react-native';
 import { Image } from 'react-native';
 import CategorySection from '../CategorySection';
+import Feather from '@expo/vector-icons/Feather';
 import Octicons from '@expo/vector-icons/Octicons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { router } from 'expo-router';
 
 function HomeHeader() {
   const [popupVisible, setPopupVisible] = useState(false);
@@ -29,27 +31,33 @@ function HomeHeader() {
     <View style={styles.headerContainer}>
       <View style={styles.topHeader}>
         <View>
-          <Image
+          <Text style={styles.logo}>SpareGoo</Text>
+          {/* <Image
             src="https://plus.unsplash.com/premium_photo-1689539137236-b68e436248de?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cHJvZmlsZSUyMHBpY3R1cmV8ZW58MHx8MHx8fDA%3D"
             style={{ width: 40, height: 40, borderRadius: 50 }}
-          />
+          /> */}
         </View>
         <View style={styles.rightHeader}>
           <View style={styles.notifications}>
-            <FontAwesome name="circle" size={10} color="red" />
+            {/* <FontAwesome name="circle" size={10} color="red" /> */}
             <Octicons name="bell" size={24} color="black" />
           </View>
-          <TouchableOpacity onPress={() => setPopupVisible(!popupVisible)}>
+          <TouchableOpacity onPress={()=> router.push('/cart')}>
+          {/* <FontAwesome name="circle" size={10} color="red" /> */}
+            <Feather name="shopping-cart" size={24} color="black" />
+
+          </TouchableOpacity>
+          {/* <TouchableOpacity onPress={() => setPopupVisible(!popupVisible)}>
             <View style={styles.kebab}>
               <Octicons name="kebab-horizontal" size={24} color="black" />
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
-      <View style={styles.categoriesContainer}>
-        <Text>Categories</Text>
+      {/* <View style={styles.categoriesContainer}>
+        <Text style={styles.categoriesTitle}>Categories</Text>
         <CategorySection />
-      </View>
+      </View> */}
 
       {/* Popup Menu */}
       {popupVisible && (
@@ -78,33 +86,54 @@ const styles = StyleSheet.create({
   topHeader: {
     width: '100%',
     flexDirection: 'row',
-    paddingTop: 30,
+    paddingTop: 50,
     justifyContent: 'space-between',
     alignItems: 'center',
+    // backgroundColor:'yellow'
+  },
+  logo: {
+    // backgroundColor:'red',
+    width: 150,
+    fontSize: 18,
+    // fontWeight: 'bold',
+    fontFamily: 'SuperCharge'
   },
   kebab: {
     transform: [{ rotate: '90deg' }],
   },
   notifications: {},
   rightHeader: {
-    width: 60,
+    width: '30%',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    // backgroundColor:'green'
+  },
+  leftHeader:{
+    width: '50%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    backgroundColor:'blue'
   },
   headerContainer: {
     width: '100%',
-    height: 150,
+    height: 100,
     backgroundColor: '#fff',
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'column',
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
   },
   categoriesContainer: {
     height: 60,
     width: '100%',
     justifyContent: 'center',
+  },
+  categoriesTitle: {
+    fontSize: 15,
+    // fontWeight: 'bold',
+    fontFamily: 'PoppinsRegular',
   },
   popupMenu: {
     position: 'absolute',
