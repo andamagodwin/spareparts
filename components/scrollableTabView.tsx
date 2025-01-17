@@ -9,41 +9,54 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import AllProductsComponent from './AllProducts';
+import CategoryProductsComponent from './categoryProducts';
 
 const { width } = Dimensions.get('window');
-
-const headers = [
-  'header1',
-  'header header 2',
-  'header3',
-  'header header4',
-  'header5',
-  'header header6',
-  'header7',
-  'header header8',
-  'header9',
-  'header10',
-];
 
 let animationActive = true;
 let animationActiveRef: NodeJS.Timeout | null = null;
 
 export default function ScrollableTabViewPage2() {
+  const [data, setData] = useState<string[]>([]);
   const [active, setActive] = useState<number>(0);
   const headerScrollView = useRef<FlatList<string>>(null);
   const itemScrollView = useRef<FlatList<string>>(null);
 
   useEffect(() => {
-    if (headerScrollView.current) {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('https://spareparts-backend.vercel.app/api/categories', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        const results = await response.json();
+        const categoryNames = results.map((category: { name: string }) => category.name);
+        setData(['All', ...categoryNames]); // Prepend "All" to the categories
+        console.log(['All', ...categoryNames]); // Debugging log
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    fetchCategories();
+  }, []);
+  
+
+  useEffect(() => {
+    if (headerScrollView.current && data.length > 0) {
       headerScrollView.current.scrollToIndex({ index: active, viewPosition: 0.5 });
     }
-  }, [active]);
+  }, [active, data]); // Add `data` as a dependency
+  
 
   const onPressHeader = (index: number) => {
     if (animationActiveRef) {
       clearTimeout(animationActiveRef);
     }
-    if (active !== index) {
+    if (data.length > 0 && active !== index) { // Ensure data is available
       animationActive = false;
       animationActiveRef = setTimeout(() => {
         animationActive = true;
@@ -54,6 +67,7 @@ export default function ScrollableTabViewPage2() {
       setActive(index);
     }
   };
+  
 
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const x = e.nativeEvent.contentOffset.x;
@@ -66,13 +80,21 @@ export default function ScrollableTabViewPage2() {
   const onMomentumScrollEnd = () => {
     animationActive = true;
   };
+  if (data.length === 0) {
+    return (
+      <View style={styles.container}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+  
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={headers}
+        data={data}
         ref={headerScrollView}
-        keyExtractor={(item) => item}
+        keyExtractor={(item, index) => index.toString()}
         horizontal
         style={styles.headerScroll}
         showsHorizontalScrollIndicator={false}
@@ -80,18 +102,18 @@ export default function ScrollableTabViewPage2() {
           <View>
             <TouchableOpacity
               onPress={() => onPressHeader(index)}
-              style={[styles.headerItem, { backgroundColor: active === index ? '#b6d7fc' : '#82bcff' }]}
+              style={[styles.headerItem, { backgroundColor: active === index ? '#fff' : '#fff' }]}
             >
-              <Text>{item}</Text>
+              <Text style={{ fontFamily: 'PoppinsRegular', color: active === index ? '#1F41BB' : '#000' }}>{item}</Text>
             </TouchableOpacity>
             {active === index && <View style={styles.headerBar} />}
           </View>
         )}
       />
       <FlatList
-        data={headers}
+        data={data}
         ref={itemScrollView}
-        keyExtractor={(item) => item}
+        keyExtractor={(item, index) => index.toString()}
         horizontal
         pagingEnabled
         decelerationRate="fast"
@@ -100,8 +122,11 @@ export default function ScrollableTabViewPage2() {
         onMomentumScrollEnd={onMomentumScrollEnd}
         renderItem={({ item, index }) => (
           <View style={styles.mainItem}>
-            <Text>Animation happens while scrolling itself</Text>
-            <Text>card {index + 1}</Text>
+            {item === 'All' ? (
+              <AllProductsComponent />
+            ) : (
+              <CategoryProductsComponent category={item} />
+            )}
           </View>
         )}
       />
@@ -119,7 +144,10 @@ const styles = StyleSheet.create({
   headerItem: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
+    padding: 15,
+    borderRadius:5,
+    borderColor:'#1F41BB',
+    fontFamily:'PoppinsRegular'
   },
   mainItem: {
     width: width,
