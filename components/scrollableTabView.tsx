@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   Dimensions,
   FlatList,
+  Image,
   NativeScrollEvent,
   NativeSyntheticEvent,
   StyleSheet,
@@ -14,85 +15,107 @@ import CategoryProductsComponent from './categoryProducts';
 
 const { width } = Dimensions.get('window');
 
-let animationActive = true;
-let animationActiveRef: NodeJS.Timeout | null = null;
+
+
+const ICONS: { [key: string]: any } = {
+  All: require('../assets/icons/All.png'),
+  Brakes: require('../assets/icons/Brakes.png'),
+  Accessories: require('../assets/icons/Accessories.png'),
+  AirConditioningandHeating: require('../assets/icons/Air Conditioning and Heating.png'),
+  BeltsandHoses: require('../assets/icons/Belts and Hoses.png'),
+  BodyParts: require('../assets/icons/Body Parts.png'),
+  CoolingSystem: require('../assets/icons/Cooling System.png'),
+  Electrical: require('../assets/icons/Electrical.png'),
+  EngineParts: require('../assets/icons/Engine Parts.png'),
+  Exhaust: require('../assets/icons/Exhaust.png'),
+  Filters: require('../assets/icons/Filters.png'),
+  FuelSystem: require('../assets/icons/Fuel System.png'),
+  GasketsandSeals: require('../assets/icons/Gaskets and Seals.png'),
+  Interior: require('../assets/icons/Interior.png'),
+  Lighting: require('../assets/icons/Lighting.png'),
+  SteeringSystem: require('../assets/icons/Steering System.png'),
+  Suspension: require('../assets/icons/Suspension.png'),
+  Tools: require('../assets/icons/Tools.png'),
+  Transmission: require('../assets/icons/Transmission.png'),
+  WheelsandTires: require('../assets/icons/Wheels and Tires.png'),
+  // Add more categories as needed
+  // Add more categories as needed
+};
+
+
+
+interface Category {
+  name: string;
+  icon: any; // Replace `any` with the appropriate type for images if needed
+}
 
 export default function ScrollableTabViewPage2() {
-  const [data, setData] = useState<string[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [active, setActive] = useState<number>(0);
-  const headerScrollView = useRef<FlatList<string>>(null);
-  const itemScrollView = useRef<FlatList<string>>(null);
+  const headerScrollView = useRef<FlatList<Category>>(null);
+  const itemScrollView = useRef<FlatList<Category>>(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch('https://spareparts-backend.vercel.app/api/categories', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        const response = await fetch('https://spareparts-backend.vercel.app/api/categories');
         const results = await response.json();
-        const categoryNames = results.map((category: { name: string }) => category.name);
-        setData(['All', ...categoryNames]); // Prepend "All" to the categories
-        console.log(['All', ...categoryNames]); // Debugging log
+
+        // Map categories to include icons
+        const categoriesWithIcons: Category[] = [
+          { name: 'All', icon: require('../assets/icons/All.png') },
+          ...results.map((category: { name: string }) => ({
+            name: category.name,
+            icon: ICONS[category.name.replace(/\s+/g, '')] || require('../assets/icons/Brakes.png'),
+
+          })),
+        ];
+
+        setCategories(categoriesWithIcons);
       } catch (error) {
-        console.error(error);
+        console.error('Error fetching categories:', error);
       }
     };
-  
+
     fetchCategories();
   }, []);
-  
 
   useEffect(() => {
-    if (headerScrollView.current && data.length > 0) {
+    if (headerScrollView.current && categories.length > 0) {
       headerScrollView.current.scrollToIndex({ index: active, viewPosition: 0.5 });
     }
-  }, [active, data]); // Add `data` as a dependency
-  
+  }, [active, categories]);
 
   const onPressHeader = (index: number) => {
-    if (animationActiveRef) {
-      clearTimeout(animationActiveRef);
-    }
-    if (data.length > 0 && active !== index) { // Ensure data is available
-      animationActive = false;
-      animationActiveRef = setTimeout(() => {
-        animationActive = true;
-      }, 400);
+    if (categories.length > 0 && active !== index) {
       if (itemScrollView.current) {
         itemScrollView.current.scrollToIndex({ index });
       }
       setActive(index);
     }
   };
-  
 
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const x = e.nativeEvent.contentOffset.x;
     const newIndex = Math.floor(x / width + 0.5);
-    if (active !== newIndex && animationActive) {
+    if (active !== newIndex) {
       setActive(newIndex);
     }
   };
 
-  const onMomentumScrollEnd = () => {
-    animationActive = true;
-  };
-  if (data.length === 0) {
+  if (categories.length === 0) {
     return (
       <View style={styles.container}>
         <Text>Loading...</Text>
       </View>
     );
   }
-  
 
   return (
     <View style={styles.container}>
+      {/* Header Scroll */}
       <FlatList
-        data={data}
+        data={categories}
         ref={headerScrollView}
         keyExtractor={(item, index) => index.toString()}
         horizontal
@@ -102,16 +125,29 @@ export default function ScrollableTabViewPage2() {
           <View>
             <TouchableOpacity
               onPress={() => onPressHeader(index)}
-              style={[styles.headerItem, { backgroundColor: active === index ? '#fff' : '#fff' }]}
+              style={[
+                styles.headerItem,
+                { backgroundColor: active === index ? 'white' : 'white' },
+              ]}
             >
-              <Text style={{ fontFamily: 'PoppinsRegular', color: active === index ? '#1F41BB' : '#000' }}>{item}</Text>
+              <Image source={item.icon} style={styles.icon} />
+              <Text
+                style={{
+                  fontFamily: 'PoppinsRegular',
+                  color: active === index ? '#1F41BB' : '#000',
+                }}
+              >
+                {item.name}
+              </Text>
             </TouchableOpacity>
             {active === index && <View style={styles.headerBar} />}
           </View>
         )}
       />
+
+      {/* Content Scroll */}
       <FlatList
-        data={data}
+        data={categories}
         ref={itemScrollView}
         keyExtractor={(item, index) => index.toString()}
         horizontal
@@ -119,13 +155,12 @@ export default function ScrollableTabViewPage2() {
         decelerationRate="fast"
         showsHorizontalScrollIndicator={false}
         onScroll={onScroll}
-        onMomentumScrollEnd={onMomentumScrollEnd}
-        renderItem={({ item, index }) => (
+        renderItem={({ item }) => (
           <View style={styles.mainItem}>
-            {item === 'All' ? (
+            {item.name === 'All' ? (
               <AllProductsComponent />
             ) : (
-              <CategoryProductsComponent category={item} />
+              <CategoryProductsComponent category={item.name} />
             )}
           </View>
         )}
@@ -140,28 +175,34 @@ const styles = StyleSheet.create({
   },
   headerScroll: {
     flexGrow: 0,
+    backgroundColor: '#fff',
   },
   headerItem: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 15,
-    borderRadius:5,
-    borderColor:'#1F41BB',
-    fontFamily:'PoppinsRegular'
+    // padding: 2,
+    minWidth: 70,
+    borderRadius: 5,
+    // borderColor: '#1F41BB',
+    // borderWidth: 1,
+    margin: 5,
+  },
+  icon: {
+    width: 24,
+    height: 24,
+    marginBottom: 5,
   },
   mainItem: {
     width: width,
-    borderWidth: 5,
-    borderColor: '#fff',
-    backgroundColor: '#ccc',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
+    backgroundColor: '#fff',
   },
   headerBar: {
     height: 2,
     width: '90%',
     alignSelf: 'center',
-    backgroundColor: '#000',
+    backgroundColor: '#1F41BB',
     position: 'absolute',
     bottom: 0,
   },
