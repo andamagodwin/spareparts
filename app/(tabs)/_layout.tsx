@@ -21,6 +21,7 @@ export default function TabLayout() {
         tabBarActiveTintColor: activeTintColor,
         tabBarInactiveTintColor: inactiveTintColor,
         headerShown: false,
+        tabBarLabelStyle: { fontSize: 12, fontFamily: 'PoppinsRegular' },
         tabBarButton: HapticTab,
         tabBarStyle: [
           styles.tabBar,
@@ -40,9 +41,27 @@ export default function TabLayout() {
       <Tabs.Screen
         name="favorites"
         options={{
-          title: 'Favorites',
+          title: 'Wishlist',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="heart-outline" size={size + 2} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="sell"
+        options={{
+          title: 'sell',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="add-circle-outline" size={size + 2} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="message"
+        options={{
+          title: 'Messages',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="chatbubbles-outline" size={size + 2} color={color} />
           ),
         }}
       />
@@ -65,6 +84,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     paddingTop: 10,
     height: 70,
+    borderTopWidth: 2,
     // borderRadius: 15,
     // marginHorizontal: 10,
     shadowColor: '#000',

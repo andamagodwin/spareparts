@@ -43,17 +43,14 @@ function HomeHeader() {
           
         </View>
         <View>
-          <Text style={styles.logo}>SpareGoo</Text>
+          {/* <Text style={styles.logo}>SpareGoo</Text> */}
           {/* <Image
             src="https://plus.unsplash.com/premium_photo-1689539137236-b68e436248de?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cHJvZmlsZSUyMHBpY3R1cmV8ZW58MHx8MHx8fDA%3D"
             style={{ width: 40, height: 40, borderRadius: 50 }}
           /> */}
         </View>
         <View style={styles.rightHeader}>
-          <View style={styles.notifications}>
-            {/* <FontAwesome name="circle" size={10} color="red" /> */}
-            <Octicons name="bell" size={24} color="black" />
-          </View>
+          {/*  */}
           <TouchableOpacity onPress={()=> router.push('/cart')}>
             {/* <FontAwesome5 name="circle" size={10} color="red" /> */}
             <Feather name="shopping-cart" size={24} color="black" />
@@ -116,7 +113,7 @@ const styles = StyleSheet.create({
   },
   notifications: {},
   rightHeader: {
-    width: '30%',
+    width: '10%',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
