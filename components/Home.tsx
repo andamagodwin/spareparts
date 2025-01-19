@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { View,StyleSheet, Text, Touchable, TouchableOpacity, Image, FlatList } from 'react-native'
+import { View,StyleSheet, Text, Touchable, TouchableOpacity, Image, FlatList, ScrollView } from 'react-native'
 import HomeHeader from './headers/Home'
 import { useRouter } from 'expo-router'
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -9,6 +9,8 @@ import { Button } from '@rneui/themed';
 import { useDispatch } from 'react-redux';
 import { logout } from '@/redux/slices/authSlice';
 import ScrollableTabViewPage2 from './scrollableTabView';
+import NewArrivals from './NewArrivals';
+import TileScrolling from './TileScrolling';
 
 // import MostViewed from './MostViewed';
 
@@ -80,33 +82,11 @@ function Home() {
   return (
     <View style={styles.homeContainer}>
         <HomeHeader/>
-        {/* <Text>Welcome, {user?.name || 'Guest'}!</Text>
-        <Button title="Logout" onPress={handleLogout} /> */}
-        <ScrollableTabViewPage2/>
-        
-
-
-        {/* <MostViewed/> */}
-        {/* <FlatList
-          data={data}
-          contentContainerStyle={styles.productList}
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => router.push(`/products/${item._id}`)}>
-              <View style={styles.productCard}>
-                <View style={{zIndex:1,display:'flex',justifyContent:'center',alignItems:'center',position:'absolute',borderRadius: 10,width:40,height:40,backgroundColor:'white'}}>
-                  <Ionicons name="heart-outline" size={24} color="black" />
-                </View>
-                <Image src={item.image_url} style={{width: 150, height: 150,borderRadius: 10}} />
-                <Text>{item.name}</Text>
-              <Text>{item.price}</Text>
-            </View>
-            </TouchableOpacity>
-            
-          )}
-          keyExtractor={(item) => item._id}
-        /> */}
-        
-       
+        {/* <TileScrolling/> */}
+        <ScrollView>
+          {/* <NewArrivals/> */}
+          <ScrollableTabViewPage2/>
+        </ScrollView>
     </View>
   )
 }

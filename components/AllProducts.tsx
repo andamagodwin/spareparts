@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import NewArrivals from './NewArrivals';
 
 interface Product {
     _id: string;
@@ -29,7 +30,11 @@ export default function AllProductsComponent() {
   }, []);
 
   return (
-    <FlatList
+    <>
+      
+      {/* <NewArrivals/> */}
+      
+      <FlatList
       data={products}
       contentContainerStyle={styles.productList}
       keyExtractor={(item, index) => index.toString()}
@@ -49,6 +54,8 @@ export default function AllProductsComponent() {
             </TouchableOpacity>
       )}
     />
+    </>
+    
   );
 }
 

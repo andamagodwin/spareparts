@@ -172,6 +172,8 @@ export default function ScrollableTabViewPage2() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 20,
+    backgroundColor: '#fff',
   },
   headerScroll: {
     flexGrow: 0,
