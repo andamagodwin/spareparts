@@ -16,6 +16,9 @@ import { router } from 'expo-router';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { Button } from 'react-native';
+import SearchBarButton from '../Home/SearchBarButton';
+import ShoppingCartButton from '../Home/ShoppingCartButton';
 
 function HomeHeader() {
   const user = useSelector((state: RootState) => state.auth.user);
@@ -43,7 +46,7 @@ function HomeHeader() {
           
         </View>
         <View>
-          {/* <Text style={styles.logo}>SpareGoo</Text> */}
+          <Text style={styles.logo}>SpareGoo</Text>
           {/* <Image
             src="https://plus.unsplash.com/premium_photo-1689539137236-b68e436248de?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cHJvZmlsZSUyMHBpY3R1cmV8ZW58MHx8MHx8fDA%3D"
             style={{ width: 40, height: 40, borderRadius: 50 }}
@@ -51,11 +54,12 @@ function HomeHeader() {
         </View>
         <View style={styles.rightHeader}>
           {/*  */}
-          <TouchableOpacity onPress={()=> router.push('/cart')}>
-            {/* <FontAwesome5 name="circle" size={10} color="red" /> */}
+          <ShoppingCartButton itemCount={22} />
+          
+          {/* <TouchableOpacity onPress={()=> router.push('/cart')}>
             <Feather name="shopping-cart" size={24} color="black" />
 
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           {/* <TouchableOpacity onPress={() => setPopupVisible(!popupVisible)}>
             <View style={styles.kebab}>
               <Octicons name="kebab-horizontal" size={24} color="black" />
@@ -63,10 +67,16 @@ function HomeHeader() {
           </TouchableOpacity> */}
         </View>
       </View>
-      {/* <View style={styles.categoriesContainer}>
-        <Text style={styles.categoriesTitle}>Categories</Text>
-        <CategorySection />
-      </View> */}
+      <View style={styles.categoriesContainer}>
+        {/* <Text style={styles.categoriesTitle}>Categories</Text> */}
+        <SearchBarButton/>
+        {/* <View style={styles.searchContainer}>
+          <View style={styles.searchBar}>
+            <Feather name="search" size={20} color="black" />
+            <Button title="Search" style={styles.searchInput} />
+          </View>
+        </View> */}
+      </View>
 
       {/* Popup Menu */}
       {popupVisible && (
@@ -96,13 +106,20 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     paddingTop: 30,
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     // backgroundColor:'yellow'
   },
   logo: {
     // backgroundColor:'red',
     width: 150,
+    height:40,
+    paddingTop:10,
+    display:'flex',
+    flexDirection:'column',
+    justifyContent:'center',
+    alignItems:'center',
+    textAlign: 'center',
     fontSize: 18,
     // fontWeight: 'bold',
     fontFamily: 'SuperCharge',
@@ -113,9 +130,10 @@ const styles = StyleSheet.create({
   },
   notifications: {},
   rightHeader: {
-    width: '10%',
+    width: '20%',
+    height:40,
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     // backgroundColor:'green'
   },
@@ -129,11 +147,11 @@ const styles = StyleSheet.create({
   profileImage: {
     borderRadius: 50,
     borderColor:"#1F41BB",
-    borderWidth:1
+    // borderWidth:1
   },
   headerContainer: {
     width: '100%',
-    height: 100,
+    height: 150,
     backgroundColor: '#fff',
     justifyContent: 'space-between',
     alignItems: 'center',

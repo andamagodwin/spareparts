@@ -114,6 +114,7 @@ export default function ScrollableTabViewPage2() {
   return (
     <View style={styles.container}>
       {/* Header Scroll */}
+      <Text style={styles.categoryHeader}>Categories</Text>
       <FlatList
         data={categories}
         ref={headerScrollView}
@@ -199,6 +200,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fff',
+  },
+  categoryHeader: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    marginLeft: 10,
+    fontFamily: 'PoppinsRegular',
+    color: '#1F41BB',
   },
   headerBar: {
     height: 2,

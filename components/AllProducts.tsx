@@ -41,12 +41,12 @@ export default function AllProductsComponent() {
       renderItem={({ item }) => (
         <TouchableOpacity onPress={() => router.push(`/products/${item._id}`)}>
             <View style={styles.productCard}>
-              <View style={{zIndex:1,display:'flex',justifyContent:'center',alignItems:'center',position:'absolute',borderRadius: 20,width:40,height:40,backgroundColor:'white'}}>
+              <View style={{zIndex:1,display:'flex',justifyContent:'center',alignItems:'center',position:'absolute',borderRadius: 15,width:35,height:35,backgroundColor:'#fff'}}>
                 <Ionicons name="heart-outline" size={24} color="black" />
               </View>
               <Image src={item.image_url} style={{width: 150, height: 150,borderRadius: 10}} />
               <Text style={styles.productName}>{item.name}</Text>
-              <Text>{item.price}</Text>
+              <Text style={styles.price}> ugx {item.price}</Text>
               <TouchableOpacity style={styles.addToCartButton}>
                 <Text style={{color:'white',fontSize:12,fontFamily:'PoppinsRegular'}}>Add to Cart</Text>
               </TouchableOpacity>
@@ -64,24 +64,29 @@ const styles = StyleSheet.create({
   productItem: {
     padding: 10,
     backgroundColor: '#f9f9f9',
-    marginVertical: 5,
+    marginVertical: 2,
     borderRadius: 5,
   },
   addToCartButton: {
     marginTop: 5,
     padding: 8,
-    backgroundColor: '#1F41BB',
+    backgroundColor: '#e6a418',
     borderRadius: 5,
     display:'flex',
     justifyContent:'center',
     alignItems:'center'
   },
   productCard: {
-    margin: 5,
+    margin: 2,
     borderWidth:1,
     padding: 8,
     borderRadius: 10,
     borderColor: '#d4d4d4'
+  },
+  price:{
+    color: '#ef0e0e',
+    fontSize: 10,
+    fontFamily:'PoppinsRegular'
   },
   productName: {
     // marginTop: 5,
@@ -93,10 +98,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent:'space-evenly',
+    justifyContent:'center',
     paddingTop: 20,
     // height: '100%',
-    gap: 10,
+    gap: 5,
     alignItems:'center',
     backgroundColor: 'white',
   },
