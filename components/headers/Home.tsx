@@ -19,8 +19,10 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Button } from 'react-native';
 import SearchBarButton from '../Home/SearchBarButton';
 import ShoppingCartButton from '../Home/ShoppingCartButton';
+import { cartTotalQuantitySelector } from '@/redux/slices/cartSlice';
 
 function HomeHeader() {
+  const totalQuantity = useSelector(cartTotalQuantitySelector);
   const user = useSelector((state: RootState) => state.auth.user);
   const [popupVisible, setPopupVisible] = useState(false);
 
@@ -54,7 +56,7 @@ function HomeHeader() {
         </View>
         <View style={styles.rightHeader}>
           {/*  */}
-          <ShoppingCartButton itemCount={22} />
+          <ShoppingCartButton itemCount={totalQuantity} />
           
           {/* <TouchableOpacity onPress={()=> router.push('/cart')}>
             <Feather name="shopping-cart" size={24} color="black" />

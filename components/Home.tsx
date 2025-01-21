@@ -4,13 +4,14 @@ import HomeHeader from './headers/Home'
 import { useRouter } from 'expo-router'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+import { AppDispatch, RootState } from '../redux/store';
 import { Button } from '@rneui/themed';
 import { useDispatch } from 'react-redux';
 import { logout } from '@/redux/slices/authSlice';
 import ScrollableTabViewPage2 from './scrollableTabView';
 import NewArrivals from './NewArrivals';
 import TileScrolling from './TileScrolling';
+import { fetchCart } from '@/redux/thunks/cartThunks';
 
 // import MostViewed from './MostViewed';
 
@@ -24,7 +25,7 @@ interface Product {
 
 
 function Home() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.auth.user);
 
   const [data, setData] = React.useState<Product[]>([]);
@@ -44,6 +45,9 @@ function Home() {
     fetchData();
     
   }, []);
+  useEffect(() => {
+    dispatch(fetchCart());
+  }, [dispatch]);
 
 
 
