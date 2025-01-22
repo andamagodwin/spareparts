@@ -3,7 +3,7 @@ import { View, TextInput, Text, FlatList, TouchableOpacity, StyleSheet, Activity
 
 const SearchScreen: React.FC = () => {
   const [query, setQuery] = useState('');
-  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<{ _id: string; name: string }[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
 
@@ -15,10 +15,11 @@ const SearchScreen: React.FC = () => {
 
     setIsLoading(true);
     try {
-      const response = await fetch(`http://<your-backend-url>/products?search=${searchTerm}`);
+      const response = await fetch(`https://spareparts-backend.vercel.app/api/products?search=${searchTerm}`);
       if (!response.ok) throw new Error('Failed to fetch suggestions');
       const data = await response.json();
-      setSuggestions(data);
+      // Ensure `data` is an array of objects and extract relevant fields
+      setSuggestions(data.map((product: any) => ({ _id: product._id, name: product.name })));
     } catch (error) {
       console.error('Error fetching suggestions:', error);
     } finally {
@@ -55,13 +56,13 @@ const SearchScreen: React.FC = () => {
       ) : (
         <FlatList
           data={suggestions}
-          keyExtractor={(item, index) => `${item}-${index}`}
+          keyExtractor={(item) => item._id}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={styles.item}
-              onPress={() => handleSearchItemPress(item)}
+              onPress={() => handleSearchItemPress(item.name)}
             >
-              <Text style={styles.itemText}>{item}</Text>
+              <Text style={styles.itemText}>{item.name}</Text>
             </TouchableOpacity>
           )}
           ListEmptyComponent={
