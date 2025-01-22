@@ -13,6 +13,9 @@ const SearchScreen: React.FC = () => {
       return;
     }
 
+    
+
+
     setIsLoading(true);
     try {
       const response = await fetch(`https://spareparts-backend.vercel.app/api/products?search=${searchTerm}`);
@@ -29,6 +32,11 @@ const SearchScreen: React.FC = () => {
 
   const handleSearchInput = (text: string) => {
     setQuery(text);
+
+    if (!text.trim()) {
+      setSuggestions([]); // Clear suggestions when search query is empty
+      return;
+    }
 
     // Debounce logic
     if (debounceTimer) clearTimeout(debounceTimer);
