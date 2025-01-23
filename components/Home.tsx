@@ -12,6 +12,7 @@ import ScrollableTabViewPage2 from './scrollableTabView';
 import NewArrivals from './NewArrivals';
 import TileScrolling from './TileScrolling';
 import { fetchCart } from '@/redux/thunks/cartThunks';
+import CategorySection from './CategorySection';
 
 // import MostViewed from './MostViewed';
 
@@ -40,7 +41,7 @@ function Home() {
       });
       const results = await response.json();
       setData(results);
-      console.log(results);
+      // console.log(results);
     }
     fetchData();
     
@@ -88,8 +89,9 @@ function Home() {
         <HomeHeader/>
         {/* <TileScrolling/> */}
         <ScrollView>
+          <CategorySection/>
           {/* <NewArrivals/> */}
-          <ScrollableTabViewPage2/>
+          {/* <ScrollableTabViewPage2/> */}
         </ScrollView>
     </View>
   )

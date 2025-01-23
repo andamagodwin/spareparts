@@ -30,6 +30,7 @@ export default function CategorySection() {
 
   const renderCategory = ({ item }: { item: CategoryItem }) => (
     <TouchableOpacity
+      key={item.id}
       style={[
         styles.categoryItem,
         selectedCategory === item.id && styles.selectedCategory,
@@ -50,14 +51,7 @@ export default function CategorySection() {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={categories}
-        renderItem={renderCategory}
-        keyExtractor={(item) => item.id}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.listContainer}
-      />
+      {categories.map((category) => renderCategory({ item: category }))}
     </View>
   );
 }
@@ -65,6 +59,11 @@ export default function CategorySection() {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 5,
+    backgroundColor: 'red',
+    width:'100%',
+    display:'flex',
+    flexDirection:'column',
+
   },
   listContainer: {
     alignItems: 'center',
@@ -74,6 +73,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 15,
+    width:100,
     gap:11,
     padding: 8,
     // borderWidth: 1,
